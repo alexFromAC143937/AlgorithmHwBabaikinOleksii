@@ -9,7 +9,7 @@ public class LineAlgorithm {
         System.out.println("1) Sum: num1 + num2 + num3 = " + sum3params(4, 1, 9));
 
 
-        int[] array = new int[6];
+        int[] array = new int[5];
         array[0] = 25;
         array[1] = 14;
         array[2] = 56;
@@ -17,7 +17,7 @@ public class LineAlgorithm {
         array[4] = 47;
 
         System.out.println("2.1) Init array : " + Arrays.toString(array));
-        addIndexItem(array, 3, 5);
+        array = addIndexItem(array, 3, 5);
         System.out.println("2.2) Inserted item to array : " + Arrays.toString(array));
 
         System.out.println("3) Max value: " + maxItem(array));
@@ -31,19 +31,30 @@ public class LineAlgorithm {
         return sum;
     }
 
-    public static void addIndexItem(int[] array, int index, int item) {
+    public static int[] addIndexItem(int[] array, int index, int item) {
+
         try {
-            for (int i = array.length - 1; i >= 0; i--) {
-                if (i == index - 1) {
-                    array[i] = item;
-                    break;
+            int[] array1;
+            if (array.length + 1 >= index) {
+                array1 = new int[array.length + 1];
+            } else {
+                array1 = new int[index];
+            }
+
+            for (int i = 0; i < array.length; i++) {
+                if (i >= index - 1) {
+                    array1[i + 1] = array[i];
                 } else {
-                    array[i] = array[i - 1];
+                    array1[i] = array[i];
                 }
             }
-        }catch (ArrayIndexOutOfBoundsException e){
-                System.out.println("Incorrect index: " );
+            array1[index - 1] = item;
+            return array1;
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("Index is out of range! Index: " + index);
+            return array;
         }
+
     }
 
     public static int maxItem(int[] array){
